@@ -1,1 +1,32 @@
-<h1>Hello World</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Main</title>
+  <script src="wordwall.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+</head>
+
+<body>
+  <div id="myapp"></div>
+  <script>
+  var app = Elm.Main.init({
+    node: document.getElementById('myapp')
+  });
+
+
+  if ('speechSynthesis' in window) {
+ // Speech Synthesis supported 🎉
+ app.ports.sendMessage.subscribe(function(message) {
+    var msg = new SpeechSynthesisUtterance();
+	msg.text = message;
+	window.speechSynthesis.speak(msg);
+  });
+}else{
+  // Speech Synthesis Not Supported 😣
+  alert("Sorry, your browser doesn't support text to speech!");
+}
+
+  </script>
+</body>
+</html>
