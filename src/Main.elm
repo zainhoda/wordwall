@@ -6,6 +6,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Json.Decode as D
 import Random
+import Browser.Events exposing (onKeyDown)
 
 
 -- MAIN
@@ -17,7 +18,7 @@ main =
         { init = init
         , view = view
         , update = update
-        , subscriptions = \_ -> Sub.none
+        , subscriptions = \_ -> Browser.Events.onKeyDown keyDecoder
         }
 
 
@@ -61,6 +62,8 @@ type Msg
     | Replay
     | NextWord
     | MoreMissing
+    | Typed Char
+    | NoOp
 
 
 
@@ -100,7 +103,7 @@ update msg model =
 
         NextWord ->
             let newModel = {model | whichWord = 
-                                      if List.length model.messages > model.whichWord+1 then
+                                      if List.length model.messages > (model.whichWord+1) then
                                         model.whichWord + 1
                                       else
                                         0
@@ -114,6 +117,20 @@ update msg model =
           ( { model | numMissing = model.numMissing + 1}
           , sendMessage (("What are the missing letters in " ++ (getMysteryWord model) ++"?"))
           )
+
+        Typed c ->
+          if model.isAdding then
+            ( model, Cmd.none)
+          else
+            if (model.numFound + 1) > model.numMissing then
+                update NextWord { model | draft = "", numFound = 0}
+            else if c == getCurrentLetter model then
+                ( { model | draft = "", numFound = model.numFound + 1}, sendMessage "Correct!")
+            else
+              ( { model | draft = String.fromChar c}, Cmd.none)
+
+        NoOp ->
+          ( model, Cmd.none)
 
 -- SUBSCRIPTIONS
 -- VIEW
@@ -139,20 +156,31 @@ mysteryWordView : Model -> Html Msg
 mysteryWordView model =
     div [ class "container is-fluid" ]
         [ h1 [ class "title" ] [ text ("What are the missing letters?") ]
-        , mysteryLetter (getMysteryWord model) model.numFound model.numMissing
+        , mysteryLetter model.draft (getMysteryWord model) model.numFound model.numMissing
         , button [class "button is-info", onClick Replay] [text "🔊 Replay"]
         , button [class "button is-primary", onClick NextWord] [text "➡️ Next Word"]
         , button [class "button is-warning", onClick MoreMissing] [text "🆙 Next Level"]
         ]
 
+getCurrentLetter : Model -> Char
+getCurrentLetter model =
+  let charList = String.toList (getMysteryWord model) 
+  in  
+    List.drop model.numFound charList
+    |> List.head
+    |> Maybe.withDefault ' '
 
-mysteryLetter : String -> Int -> Int -> Html Msg
-mysteryLetter word numberFound numberMissing =
+mysteryLetter : String -> String -> Int -> Int -> Html Msg
+mysteryLetter guess word numberFound numberMissing =
     div []
         (List.indexedMap
             (\i ->
                 \letter ->
-                    if i < (numberMissing - numberFound) then
+                    if i == numberFound && guess /= "" then 
+                        div [ class "button is-danger is-large m-2" ] [ text guess ]
+                    else if i < numberFound then
+                        div [ class "button is-success is-large m-2" ] [ text (String.fromChar letter) ]
+                    else if i < numberMissing then
                         div [ class "button is-light is-large m-2" ] [ text "🤔" ]
                     else
                         div [ class "button is-light is-large m-2" ] [ text (String.fromChar letter) ]
@@ -211,3 +239,19 @@ ifIsEnter msg =
                 else
                     D.fail "some other key"
             )
+
+
+--
+
+keyDecoder : D.Decoder Msg
+keyDecoder =
+  D.map toKey (D.field "key" D.string)
+
+toKey : String -> Msg
+toKey string =
+  case String.uncons string of
+    Just (char, "") ->
+      Typed char
+
+    _ ->
+      NoOp

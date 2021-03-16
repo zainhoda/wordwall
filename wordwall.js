@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.N.B === region.S.B)
+	if (region.N.E === region.S.E)
 	{
-		return 'on line ' + region.N.B;
+		return 'on line ' + region.N.E;
 	}
-	return 'on lines ' + region.N.B + ' through ' + region.S.B;
+	return 'on lines ' + region.N.E + ' through ' + region.S.E;
 }
 
 
@@ -2704,7 +2704,7 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		o: func(record.o),
+		p: func(record.p),
 		O: record.O,
 		L: record.L
 	}
@@ -2974,7 +2974,7 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.o;
+		var message = !tag ? value : tag < 3 ? value.a : value.p;
 		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.O;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
@@ -5142,11 +5142,435 @@ var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$init = function (_v0) {
 	return _Utils_Tuple2(
-		{r: '', H: true, k: _List_Nil, J: 0, C: 1, z: 0},
+		{h: '', D: true, l: _List_Nil, q: 0, y: 1, B: 0},
 		$elm$core$Platform$Cmd$none);
 };
-var $elm$core$Platform$Sub$batch = _Platform_batch;
-var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
+var $elm$json$Json$Decode$field = _Json_decodeField;
+var $elm$json$Json$Decode$string = _Json_decodeString;
+var $author$project$Main$NoOp = {$: 8};
+var $author$project$Main$Typed = function (a) {
+	return {$: 7, a: a};
+};
+var $author$project$Main$toKey = function (string) {
+	var _v0 = $elm$core$String$uncons(string);
+	if ((!_v0.$) && (_v0.a.b === '')) {
+		var _v1 = _v0.a;
+		var _char = _v1.a;
+		return $author$project$Main$Typed(_char);
+	} else {
+		return $author$project$Main$NoOp;
+	}
+};
+var $author$project$Main$keyDecoder = A2(
+	$elm$json$Json$Decode$map,
+	$author$project$Main$toKey,
+	A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string));
+var $elm$browser$Browser$Events$Document = 0;
+var $elm$browser$Browser$Events$MySub = F3(
+	function (a, b, c) {
+		return {$: 0, a: a, b: b, c: c};
+	});
+var $elm$browser$Browser$Events$State = F2(
+	function (subs, pids) {
+		return {aa: pids, aj: subs};
+	});
+var $elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
+var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
+var $elm$browser$Browser$Events$init = $elm$core$Task$succeed(
+	A2($elm$browser$Browser$Events$State, _List_Nil, $elm$core$Dict$empty));
+var $elm$browser$Browser$Events$nodeToKey = function (node) {
+	if (!node) {
+		return 'd_';
+	} else {
+		return 'w_';
+	}
+};
+var $elm$browser$Browser$Events$addKey = function (sub) {
+	var node = sub.a;
+	var name = sub.b;
+	return _Utils_Tuple2(
+		_Utils_ap(
+			$elm$browser$Browser$Events$nodeToKey(node),
+			name),
+		sub);
+};
+var $elm$core$Dict$Black = 1;
+var $elm$core$Dict$RBNode_elm_builtin = F5(
+	function (a, b, c, d, e) {
+		return {$: -1, a: a, b: b, c: c, d: d, e: e};
+	});
+var $elm$core$Dict$Red = 0;
+var $elm$core$Dict$balance = F5(
+	function (color, key, value, left, right) {
+		if ((right.$ === -1) && (!right.a)) {
+			var _v1 = right.a;
+			var rK = right.b;
+			var rV = right.c;
+			var rLeft = right.d;
+			var rRight = right.e;
+			if ((left.$ === -1) && (!left.a)) {
+				var _v3 = left.a;
+				var lK = left.b;
+				var lV = left.c;
+				var lLeft = left.d;
+				var lRight = left.e;
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					0,
+					key,
+					value,
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, rK, rV, rLeft, rRight));
+			} else {
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					color,
+					rK,
+					rV,
+					A5($elm$core$Dict$RBNode_elm_builtin, 0, key, value, left, rLeft),
+					rRight);
+			}
+		} else {
+			if ((((left.$ === -1) && (!left.a)) && (left.d.$ === -1)) && (!left.d.a)) {
+				var _v5 = left.a;
+				var lK = left.b;
+				var lV = left.c;
+				var _v6 = left.d;
+				var _v7 = _v6.a;
+				var llK = _v6.b;
+				var llV = _v6.c;
+				var llLeft = _v6.d;
+				var llRight = _v6.e;
+				var lRight = left.e;
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					0,
+					lK,
+					lV,
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, llK, llV, llLeft, llRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, key, value, lRight, right));
+			} else {
+				return A5($elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
+			}
+		}
+	});
+var $elm$core$Basics$compare = _Utils_compare;
+var $elm$core$Dict$insertHelp = F3(
+	function (key, value, dict) {
+		if (dict.$ === -2) {
+			return A5($elm$core$Dict$RBNode_elm_builtin, 0, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
+		} else {
+			var nColor = dict.a;
+			var nKey = dict.b;
+			var nValue = dict.c;
+			var nLeft = dict.d;
+			var nRight = dict.e;
+			var _v1 = A2($elm$core$Basics$compare, key, nKey);
+			switch (_v1) {
+				case 0:
+					return A5(
+						$elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						A3($elm$core$Dict$insertHelp, key, value, nLeft),
+						nRight);
+				case 1:
+					return A5($elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
+				default:
+					return A5(
+						$elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						nLeft,
+						A3($elm$core$Dict$insertHelp, key, value, nRight));
+			}
+		}
+	});
+var $elm$core$Dict$insert = F3(
+	function (key, value, dict) {
+		var _v0 = A3($elm$core$Dict$insertHelp, key, value, dict);
+		if ((_v0.$ === -1) && (!_v0.a)) {
+			var _v1 = _v0.a;
+			var k = _v0.b;
+			var v = _v0.c;
+			var l = _v0.d;
+			var r = _v0.e;
+			return A5($elm$core$Dict$RBNode_elm_builtin, 1, k, v, l, r);
+		} else {
+			var x = _v0;
+			return x;
+		}
+	});
+var $elm$core$Dict$fromList = function (assocs) {
+	return A3(
+		$elm$core$List$foldl,
+		F2(
+			function (_v0, dict) {
+				var key = _v0.a;
+				var value = _v0.b;
+				return A3($elm$core$Dict$insert, key, value, dict);
+			}),
+		$elm$core$Dict$empty,
+		assocs);
+};
+var $elm$core$Process$kill = _Scheduler_kill;
+var $elm$core$Dict$foldl = F3(
+	function (func, acc, dict) {
+		foldl:
+		while (true) {
+			if (dict.$ === -2) {
+				return acc;
+			} else {
+				var key = dict.b;
+				var value = dict.c;
+				var left = dict.d;
+				var right = dict.e;
+				var $temp$func = func,
+					$temp$acc = A3(
+					func,
+					key,
+					value,
+					A3($elm$core$Dict$foldl, func, acc, left)),
+					$temp$dict = right;
+				func = $temp$func;
+				acc = $temp$acc;
+				dict = $temp$dict;
+				continue foldl;
+			}
+		}
+	});
+var $elm$core$Dict$merge = F6(
+	function (leftStep, bothStep, rightStep, leftDict, rightDict, initialResult) {
+		var stepState = F3(
+			function (rKey, rValue, _v0) {
+				stepState:
+				while (true) {
+					var list = _v0.a;
+					var result = _v0.b;
+					if (!list.b) {
+						return _Utils_Tuple2(
+							list,
+							A3(rightStep, rKey, rValue, result));
+					} else {
+						var _v2 = list.a;
+						var lKey = _v2.a;
+						var lValue = _v2.b;
+						var rest = list.b;
+						if (_Utils_cmp(lKey, rKey) < 0) {
+							var $temp$rKey = rKey,
+								$temp$rValue = rValue,
+								$temp$_v0 = _Utils_Tuple2(
+								rest,
+								A3(leftStep, lKey, lValue, result));
+							rKey = $temp$rKey;
+							rValue = $temp$rValue;
+							_v0 = $temp$_v0;
+							continue stepState;
+						} else {
+							if (_Utils_cmp(lKey, rKey) > 0) {
+								return _Utils_Tuple2(
+									list,
+									A3(rightStep, rKey, rValue, result));
+							} else {
+								return _Utils_Tuple2(
+									rest,
+									A4(bothStep, lKey, lValue, rValue, result));
+							}
+						}
+					}
+				}
+			});
+		var _v3 = A3(
+			$elm$core$Dict$foldl,
+			stepState,
+			_Utils_Tuple2(
+				$elm$core$Dict$toList(leftDict),
+				initialResult),
+			rightDict);
+		var leftovers = _v3.a;
+		var intermediateResult = _v3.b;
+		return A3(
+			$elm$core$List$foldl,
+			F2(
+				function (_v4, result) {
+					var k = _v4.a;
+					var v = _v4.b;
+					return A3(leftStep, k, v, result);
+				}),
+			intermediateResult,
+			leftovers);
+	});
+var $elm$browser$Browser$Events$Event = F2(
+	function (key, event) {
+		return {T: event, X: key};
+	});
+var $elm$core$Platform$sendToSelf = _Platform_sendToSelf;
+var $elm$browser$Browser$Events$spawn = F3(
+	function (router, key, _v0) {
+		var node = _v0.a;
+		var name = _v0.b;
+		var actualNode = function () {
+			if (!node) {
+				return _Browser_doc;
+			} else {
+				return _Browser_window;
+			}
+		}();
+		return A2(
+			$elm$core$Task$map,
+			function (value) {
+				return _Utils_Tuple2(key, value);
+			},
+			A3(
+				_Browser_on,
+				actualNode,
+				name,
+				function (event) {
+					return A2(
+						$elm$core$Platform$sendToSelf,
+						router,
+						A2($elm$browser$Browser$Events$Event, key, event));
+				}));
+	});
+var $elm$core$Dict$union = F2(
+	function (t1, t2) {
+		return A3($elm$core$Dict$foldl, $elm$core$Dict$insert, t2, t1);
+	});
+var $elm$browser$Browser$Events$onEffects = F3(
+	function (router, subs, state) {
+		var stepRight = F3(
+			function (key, sub, _v6) {
+				var deads = _v6.a;
+				var lives = _v6.b;
+				var news = _v6.c;
+				return _Utils_Tuple3(
+					deads,
+					lives,
+					A2(
+						$elm$core$List$cons,
+						A3($elm$browser$Browser$Events$spawn, router, key, sub),
+						news));
+			});
+		var stepLeft = F3(
+			function (_v4, pid, _v5) {
+				var deads = _v5.a;
+				var lives = _v5.b;
+				var news = _v5.c;
+				return _Utils_Tuple3(
+					A2($elm$core$List$cons, pid, deads),
+					lives,
+					news);
+			});
+		var stepBoth = F4(
+			function (key, pid, _v2, _v3) {
+				var deads = _v3.a;
+				var lives = _v3.b;
+				var news = _v3.c;
+				return _Utils_Tuple3(
+					deads,
+					A3($elm$core$Dict$insert, key, pid, lives),
+					news);
+			});
+		var newSubs = A2($elm$core$List$map, $elm$browser$Browser$Events$addKey, subs);
+		var _v0 = A6(
+			$elm$core$Dict$merge,
+			stepLeft,
+			stepBoth,
+			stepRight,
+			state.aa,
+			$elm$core$Dict$fromList(newSubs),
+			_Utils_Tuple3(_List_Nil, $elm$core$Dict$empty, _List_Nil));
+		var deadPids = _v0.a;
+		var livePids = _v0.b;
+		var makeNewPids = _v0.c;
+		return A2(
+			$elm$core$Task$andThen,
+			function (pids) {
+				return $elm$core$Task$succeed(
+					A2(
+						$elm$browser$Browser$Events$State,
+						newSubs,
+						A2(
+							$elm$core$Dict$union,
+							livePids,
+							$elm$core$Dict$fromList(pids))));
+			},
+			A2(
+				$elm$core$Task$andThen,
+				function (_v1) {
+					return $elm$core$Task$sequence(makeNewPids);
+				},
+				$elm$core$Task$sequence(
+					A2($elm$core$List$map, $elm$core$Process$kill, deadPids))));
+	});
+var $elm$core$List$maybeCons = F3(
+	function (f, mx, xs) {
+		var _v0 = f(mx);
+		if (!_v0.$) {
+			var x = _v0.a;
+			return A2($elm$core$List$cons, x, xs);
+		} else {
+			return xs;
+		}
+	});
+var $elm$core$List$filterMap = F2(
+	function (f, xs) {
+		return A3(
+			$elm$core$List$foldr,
+			$elm$core$List$maybeCons(f),
+			_List_Nil,
+			xs);
+	});
+var $elm$browser$Browser$Events$onSelfMsg = F3(
+	function (router, _v0, state) {
+		var key = _v0.X;
+		var event = _v0.T;
+		var toMessage = function (_v2) {
+			var subKey = _v2.a;
+			var _v3 = _v2.b;
+			var node = _v3.a;
+			var name = _v3.b;
+			var decoder = _v3.c;
+			return _Utils_eq(subKey, key) ? A2(_Browser_decodeEvent, decoder, event) : $elm$core$Maybe$Nothing;
+		};
+		var messages = A2($elm$core$List$filterMap, toMessage, state.aj);
+		return A2(
+			$elm$core$Task$andThen,
+			function (_v1) {
+				return $elm$core$Task$succeed(state);
+			},
+			$elm$core$Task$sequence(
+				A2(
+					$elm$core$List$map,
+					$elm$core$Platform$sendToApp(router),
+					messages)));
+	});
+var $elm$browser$Browser$Events$subMap = F2(
+	function (func, _v0) {
+		var node = _v0.a;
+		var name = _v0.b;
+		var decoder = _v0.c;
+		return A3(
+			$elm$browser$Browser$Events$MySub,
+			node,
+			name,
+			A2($elm$json$Json$Decode$map, func, decoder));
+	});
+_Platform_effectManagers['Browser.Events'] = _Platform_createManager($elm$browser$Browser$Events$init, $elm$browser$Browser$Events$onEffects, $elm$browser$Browser$Events$onSelfMsg, 0, $elm$browser$Browser$Events$subMap);
+var $elm$browser$Browser$Events$subscription = _Platform_leaf('Browser.Events');
+var $elm$browser$Browser$Events$on = F3(
+	function (node, name, decoder) {
+		return $elm$browser$Browser$Events$subscription(
+			A3($elm$browser$Browser$Events$MySub, node, name, decoder));
+	});
+var $elm$browser$Browser$Events$onKeyDown = A2($elm$browser$Browser$Events$on, 0, 'keydown');
+var $author$project$Main$NextWord = {$: 5};
+var $elm$core$String$cons = _String_cons;
+var $elm$core$String$fromChar = function (_char) {
+	return A2($elm$core$String$cons, _char, '');
+};
 var $elm$core$List$drop = F2(
 	function (n, list) {
 		drop:
@@ -5179,7 +5603,7 @@ var $elm$core$List$head = function (list) {
 };
 var $author$project$Main$getMysteryWord = function (model) {
 	var _v0 = $elm$core$List$head(
-		A2($elm$core$List$drop, model.z, model.k));
+		A2($elm$core$List$drop, model.B, model.l));
 	if (_v0.$ === 1) {
 		return '';
 	} else {
@@ -5187,77 +5611,136 @@ var $author$project$Main$getMysteryWord = function (model) {
 		return word;
 	}
 };
+var $elm$core$String$foldr = _String_foldr;
+var $elm$core$String$toList = function (string) {
+	return A3($elm$core$String$foldr, $elm$core$List$cons, _List_Nil, string);
+};
+var $elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (!maybe.$) {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
+var $author$project$Main$getCurrentLetter = function (model) {
+	var charList = $elm$core$String$toList(
+		$author$project$Main$getMysteryWord(model));
+	return A2(
+		$elm$core$Maybe$withDefault,
+		' ',
+		$elm$core$List$head(
+			A2($elm$core$List$drop, model.q, charList)));
+};
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $author$project$Main$sendMessage = _Platform_outgoingPort('sendMessage', $elm$json$Json$Encode$string);
 var $author$project$Main$update = F2(
 	function (msg, model) {
-		switch (msg.$) {
-			case 0:
-				var draft = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
+		update:
+		while (true) {
+			switch (msg.$) {
+				case 0:
+					var draft = msg.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{h: draft}),
+						$elm$core$Platform$Cmd$none);
+				case 1:
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								h: '',
+								l: _Utils_ap(
+									model.l,
+									_List_fromArray(
+										[model.h]))
+							}),
+						$author$project$Main$sendMessage(model.h));
+				case 2:
+					var message = msg.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								l: _Utils_ap(
+									model.l,
+									_List_fromArray(
+										[message]))
+							}),
+						$elm$core$Platform$Cmd$none);
+				case 3:
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{D: false}),
+						$author$project$Main$sendMessage(
+							'What are the missing letters in ' + ($author$project$Main$getMysteryWord(model) + '?')));
+				case 4:
+					return _Utils_Tuple2(
 						model,
-						{r: draft}),
-					$elm$core$Platform$Cmd$none);
-			case 1:
-				return _Utils_Tuple2(
-					_Utils_update(
+						$author$project$Main$sendMessage(
+							$author$project$Main$getMysteryWord(model)));
+				case 5:
+					var newModel = _Utils_update(
 						model,
 						{
-							r: '',
-							k: _Utils_ap(
-								model.k,
-								_List_fromArray(
-									[model.r]))
-						}),
-					$author$project$Main$sendMessage(model.r));
-			case 2:
-				var message = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							k: _Utils_ap(
-								model.k,
-								_List_fromArray(
-									[message]))
-						}),
-					$elm$core$Platform$Cmd$none);
-			case 3:
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{H: false}),
-					$author$project$Main$sendMessage(
-						'What are the missing letters in ' + ($author$project$Main$getMysteryWord(model) + '?')));
-			case 4:
-				return _Utils_Tuple2(
-					model,
-					$author$project$Main$sendMessage(
-						$author$project$Main$getMysteryWord(model)));
-			case 5:
-				var newModel = _Utils_update(
-					model,
-					{
-						z: (_Utils_cmp(
-							$elm$core$List$length(model.k),
-							model.z + 1) > 0) ? (model.z + 1) : 0
-					});
-				return _Utils_Tuple2(
-					newModel,
-					$author$project$Main$sendMessage(
-						'What are the missing letters in ' + ($author$project$Main$getMysteryWord(newModel) + '?')));
-			default:
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{C: model.C + 1}),
-					$author$project$Main$sendMessage(
-						'What are the missing letters in ' + ($author$project$Main$getMysteryWord(model) + '?')));
+							B: (_Utils_cmp(
+								$elm$core$List$length(model.l),
+								model.B + 1) > 0) ? (model.B + 1) : 0
+						});
+					return _Utils_Tuple2(
+						newModel,
+						$author$project$Main$sendMessage(
+							'What are the missing letters in ' + ($author$project$Main$getMysteryWord(newModel) + '?')));
+				case 6:
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{y: model.y + 1}),
+						$author$project$Main$sendMessage(
+							'What are the missing letters in ' + ($author$project$Main$getMysteryWord(model) + '?')));
+				case 7:
+					var c = msg.a;
+					if (model.D) {
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					} else {
+						if (_Utils_cmp(model.q + 1, model.y) > 0) {
+							var $temp$msg = $author$project$Main$NextWord,
+								$temp$model = _Utils_update(
+								model,
+								{h: '', q: 0});
+							msg = $temp$msg;
+							model = $temp$model;
+							continue update;
+						} else {
+							if (_Utils_eq(
+								c,
+								$author$project$Main$getCurrentLetter(model))) {
+								return _Utils_Tuple2(
+									_Utils_update(
+										model,
+										{h: '', q: model.q + 1}),
+									$author$project$Main$sendMessage('Correct!'));
+							} else {
+								return _Utils_Tuple2(
+									_Utils_update(
+										model,
+										{
+											h: $elm$core$String$fromChar(c)
+										}),
+									$elm$core$Platform$Cmd$none);
+							}
+						}
+					}
+				default:
+					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+			}
 		}
 	});
 var $author$project$Main$MoreMissing = {$: 6};
-var $author$project$Main$NextWord = {$: 5};
 var $author$project$Main$Replay = {$: 4};
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$Attributes$stringProperty = F2(
@@ -5270,18 +5753,11 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
-var $elm$core$String$cons = _String_cons;
-var $elm$core$String$fromChar = function (_char) {
-	return A2($elm$core$String$cons, _char, '');
-};
+var $elm$core$Basics$neq = _Utils_notEqual;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $elm$core$String$foldr = _String_foldr;
-var $elm$core$String$toList = function (string) {
-	return A3($elm$core$String$foldr, $elm$core$List$cons, _List_Nil, string);
-};
-var $author$project$Main$mysteryLetter = F3(
-	function (word, numberFound, numberMissing) {
+var $author$project$Main$mysteryLetter = F4(
+	function (guess, word, numberFound, numberMissing) {
 		return A2(
 			$elm$html$Html$div,
 			_List_Nil,
@@ -5289,7 +5765,26 @@ var $author$project$Main$mysteryLetter = F3(
 				$elm$core$List$indexedMap,
 				function (i) {
 					return function (letter) {
-						return (_Utils_cmp(i, numberMissing - numberFound) < 0) ? A2(
+						return (_Utils_eq(i, numberFound) && (guess !== '')) ? A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('button is-danger is-large m-2')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text(guess)
+								])) : ((_Utils_cmp(i, numberFound) < 0) ? A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('button is-success is-large m-2')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text(
+									$elm$core$String$fromChar(letter))
+								])) : ((_Utils_cmp(i, numberMissing) < 0) ? A2(
 							$elm$html$Html$div,
 							_List_fromArray(
 								[
@@ -5308,7 +5803,7 @@ var $author$project$Main$mysteryLetter = F3(
 								[
 									$elm$html$Html$text(
 									$elm$core$String$fromChar(letter))
-								]));
+								]))));
 					};
 				},
 				$elm$core$String$toList(word)));
@@ -5349,11 +5844,12 @@ var $author$project$Main$mysteryWordView = function (model) {
 					[
 						$elm$html$Html$text('What are the missing letters?')
 					])),
-				A3(
+				A4(
 				$author$project$Main$mysteryLetter,
+				model.h,
 				$author$project$Main$getMysteryWord(model),
-				model.J,
-				model.C),
+				model.q,
+				model.y),
 				A2(
 				$elm$html$Html$button,
 				_List_fromArray(
@@ -5407,8 +5903,6 @@ var $author$project$Main$DraftChanged = function (a) {
 var $author$project$Main$Send = {$: 1};
 var $elm$json$Json$Decode$andThen = _Json_andThen;
 var $elm$json$Json$Decode$fail = _Json_fail;
-var $elm$json$Json$Decode$field = _Json_decodeField;
-var $elm$json$Json$Decode$string = _Json_decodeString;
 var $author$project$Main$ifIsEnter = function (msg) {
 	return A2(
 		$elm$json$Json$Decode$andThen,
@@ -5527,19 +6021,19 @@ var $author$project$Main$wordInputView = function (model) {
 					[
 						$elm$html$Html$text('Enter Your Words')
 					])),
-				$author$project$Main$wordAdder(model.r),
+				$author$project$Main$wordAdder(model.h),
 				$author$project$Main$doneButton,
-				$author$project$Main$wordList(model.k)
+				$author$project$Main$wordList(model.l)
 			]));
 };
 var $author$project$Main$view = function (model) {
-	return model.H ? $author$project$Main$wordInputView(model) : $author$project$Main$mysteryWordView(model);
+	return model.D ? $author$project$Main$wordInputView(model) : $author$project$Main$mysteryWordView(model);
 };
 var $author$project$Main$main = $elm$browser$Browser$element(
 	{
 		ay: $author$project$Main$init,
 		aE: function (_v0) {
-			return $elm$core$Platform$Sub$none;
+			return $elm$browser$Browser$Events$onKeyDown($author$project$Main$keyDecoder);
 		},
 		aG: $author$project$Main$update,
 		aH: $author$project$Main$view
