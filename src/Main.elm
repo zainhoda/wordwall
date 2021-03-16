@@ -102,12 +102,11 @@ update msg model =
             )
 
         NextWord ->
-            let newModel = {model | whichWord = 
-                                      if List.length model.messages > (model.whichWord+1) then
-                                        model.whichWord + 1
-                                      else
-                                        0
-                           }
+            let newModel = 
+                  if List.length model.messages > (model.whichWord+1) then
+                    {model | whichWord = model.whichWord + 1 }
+                  else 
+                    {model | whichWord = 0, numMissing = model.numMissing + 1}
             in
             ( newModel
             , sendMessage (("What are the missing letters in " ++ (getMysteryWord newModel) ++"?"))
@@ -154,13 +153,15 @@ getMysteryWord model =
 
 mysteryWordView : Model -> Html Msg
 mysteryWordView model =
-    div [ class "container is-fluid" ]
-        [ h1 [ class "title" ] [ text ("What are the missing letters?") ]
-        , mysteryLetter model.draft (getMysteryWord model) model.numFound model.numMissing
-        , button [class "button is-info", onClick Replay] [text "🔊 Replay"]
-        , button [class "button is-primary", onClick NextWord] [text "➡️ Next Word"]
-        , button [class "button is-warning", onClick MoreMissing] [text "🆙 Next Level"]
-        ]
+    div [class "columns"] [
+      div [ class "column container is-fluid has-text-centered" ]
+          [ h1 [ class "title" ] [ text ("What are the missing letters?") ]
+          , mysteryLetter model.draft (getMysteryWord model) model.numFound model.numMissing
+          , button [class "button is-info", onClick Replay] [text "🔊 Replay"]
+          , button [class "button is-primary", onClick NextWord] [text "➡️ Next Word"]
+          , button [class "button is-warning", onClick MoreMissing] [text "🆙 Next Level"]
+          ]
+    ]
 
 getCurrentLetter : Model -> Char
 getCurrentLetter model =
@@ -181,7 +182,7 @@ mysteryLetter guess word numberFound numberMissing =
                     else if i < numberFound then
                         div [ class "button is-success is-large m-2" ] [ text (String.fromChar letter) ]
                     else if i < numberMissing then
-                        div [ class "button is-light is-large m-2" ] [ text "🤔" ]
+                        div [ class "button is-warning is-large m-2" ] [ text "🤔" ]
                     else
                         div [ class "button is-light is-large m-2" ] [ text (String.fromChar letter) ]
             )

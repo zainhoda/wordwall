@@ -5142,7 +5142,7 @@ var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$init = function (_v0) {
 	return _Utils_Tuple2(
-		{h: '', D: true, l: _List_Nil, q: 0, y: 1, B: 0},
+		{h: '', D: true, l: _List_Nil, q: 0, r: 1, y: 0},
 		$elm$core$Platform$Cmd$none);
 };
 var $elm$json$Json$Decode$field = _Json_decodeField;
@@ -5603,7 +5603,7 @@ var $elm$core$List$head = function (list) {
 };
 var $author$project$Main$getMysteryWord = function (model) {
 	var _v0 = $elm$core$List$head(
-		A2($elm$core$List$drop, model.B, model.l));
+		A2($elm$core$List$drop, model.y, model.l));
 	if (_v0.$ === 1) {
 		return '';
 	} else {
@@ -5684,13 +5684,13 @@ var $author$project$Main$update = F2(
 						$author$project$Main$sendMessage(
 							$author$project$Main$getMysteryWord(model)));
 				case 5:
-					var newModel = _Utils_update(
+					var newModel = (_Utils_cmp(
+						$elm$core$List$length(model.l),
+						model.y + 1) > 0) ? _Utils_update(
 						model,
-						{
-							B: (_Utils_cmp(
-								$elm$core$List$length(model.l),
-								model.B + 1) > 0) ? (model.B + 1) : 0
-						});
+						{y: model.y + 1}) : _Utils_update(
+						model,
+						{r: model.r + 1, y: 0});
 					return _Utils_Tuple2(
 						newModel,
 						$author$project$Main$sendMessage(
@@ -5699,7 +5699,7 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{y: model.y + 1}),
+							{r: model.r + 1}),
 						$author$project$Main$sendMessage(
 							'What are the missing letters in ' + ($author$project$Main$getMysteryWord(model) + '?')));
 				case 7:
@@ -5707,7 +5707,7 @@ var $author$project$Main$update = F2(
 					if (model.D) {
 						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 					} else {
-						if (_Utils_cmp(model.q + 1, model.y) > 0) {
+						if (_Utils_cmp(model.q + 1, model.r) > 0) {
 							var $temp$msg = $author$project$Main$NextWord,
 								$temp$model = _Utils_update(
 								model,
@@ -5788,7 +5788,7 @@ var $author$project$Main$mysteryLetter = F4(
 							$elm$html$Html$div,
 							_List_fromArray(
 								[
-									$elm$html$Html$Attributes$class('button is-light is-large m-2')
+									$elm$html$Html$Attributes$class('button is-warning is-large m-2')
 								]),
 							_List_fromArray(
 								[
@@ -5830,58 +5830,67 @@ var $author$project$Main$mysteryWordView = function (model) {
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
-				$elm$html$Html$Attributes$class('container is-fluid')
+				$elm$html$Html$Attributes$class('columns')
 			]),
 		_List_fromArray(
 			[
 				A2(
-				$elm$html$Html$h1,
+				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class('title')
+						$elm$html$Html$Attributes$class('column container is-fluid has-text-centered')
 					]),
 				_List_fromArray(
 					[
-						$elm$html$Html$text('What are the missing letters?')
-					])),
-				A4(
-				$author$project$Main$mysteryLetter,
-				model.h,
-				$author$project$Main$getMysteryWord(model),
-				model.q,
-				model.y),
-				A2(
-				$elm$html$Html$button,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('button is-info'),
-						$elm$html$Html$Events$onClick($author$project$Main$Replay)
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text('🔊 Replay')
-					])),
-				A2(
-				$elm$html$Html$button,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('button is-primary'),
-						$elm$html$Html$Events$onClick($author$project$Main$NextWord)
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text('➡️ Next Word')
-					])),
-				A2(
-				$elm$html$Html$button,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('button is-warning'),
-						$elm$html$Html$Events$onClick($author$project$Main$MoreMissing)
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text('🆙 Next Level')
+						A2(
+						$elm$html$Html$h1,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('title')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('What are the missing letters?')
+							])),
+						A4(
+						$author$project$Main$mysteryLetter,
+						model.h,
+						$author$project$Main$getMysteryWord(model),
+						model.q,
+						model.r),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('button is-info'),
+								$elm$html$Html$Events$onClick($author$project$Main$Replay)
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('🔊 Replay')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('button is-primary'),
+								$elm$html$Html$Events$onClick($author$project$Main$NextWord)
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('➡️ Next Word')
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('button is-warning'),
+								$elm$html$Html$Events$onClick($author$project$Main$MoreMissing)
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('🆙 Next Level')
+							]))
 					]))
 			]));
 };
