@@ -108,7 +108,7 @@ update msg model =
                   else 
                     {model | whichWord = 0, numMissing = model.numMissing + 1}
             in
-            ( newModel
+            ( { newModel | draft = "", numFound = 0 }
             , sendMessage (("What are the missing letters in " ++ (getMysteryWord newModel) ++"?"))
             )
 

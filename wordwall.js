@@ -2704,7 +2704,7 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		p: func(record.p),
+		q: func(record.q),
 		O: record.O,
 		L: record.L
 	}
@@ -2974,7 +2974,7 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.p;
+		var message = !tag ? value : tag < 3 ? value.a : value.q;
 		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.O;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
@@ -5142,7 +5142,7 @@ var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$init = function (_v0) {
 	return _Utils_Tuple2(
-		{h: '', D: true, l: _List_Nil, q: 0, r: 1, y: 0},
+		{f: '', D: true, l: _List_Nil, n: 0, r: 1, y: 0},
 		$elm$core$Platform$Cmd$none);
 };
 var $elm$json$Json$Decode$field = _Json_decodeField;
@@ -5631,7 +5631,7 @@ var $author$project$Main$getCurrentLetter = function (model) {
 		$elm$core$Maybe$withDefault,
 		' ',
 		$elm$core$List$head(
-			A2($elm$core$List$drop, model.q, charList)));
+			A2($elm$core$List$drop, model.n, charList)));
 };
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $author$project$Main$sendMessage = _Platform_outgoingPort('sendMessage', $elm$json$Json$Encode$string);
@@ -5645,20 +5645,20 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{h: draft}),
+							{f: draft}),
 						$elm$core$Platform$Cmd$none);
 				case 1:
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
 							{
-								h: '',
+								f: '',
 								l: _Utils_ap(
 									model.l,
 									_List_fromArray(
-										[model.h]))
+										[model.f]))
 							}),
-						$author$project$Main$sendMessage(model.h));
+						$author$project$Main$sendMessage(model.f));
 				case 2:
 					var message = msg.a;
 					return _Utils_Tuple2(
@@ -5692,7 +5692,9 @@ var $author$project$Main$update = F2(
 						model,
 						{r: model.r + 1, y: 0});
 					return _Utils_Tuple2(
-						newModel,
+						_Utils_update(
+							newModel,
+							{f: '', n: 0}),
 						$author$project$Main$sendMessage(
 							'What are the missing letters in ' + ($author$project$Main$getMysteryWord(newModel) + '?')));
 				case 6:
@@ -5707,11 +5709,11 @@ var $author$project$Main$update = F2(
 					if (model.D) {
 						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 					} else {
-						if (_Utils_cmp(model.q + 1, model.r) > 0) {
+						if (_Utils_cmp(model.n + 1, model.r) > 0) {
 							var $temp$msg = $author$project$Main$NextWord,
 								$temp$model = _Utils_update(
 								model,
-								{h: '', q: 0});
+								{f: '', n: 0});
 							msg = $temp$msg;
 							model = $temp$model;
 							continue update;
@@ -5722,14 +5724,14 @@ var $author$project$Main$update = F2(
 								return _Utils_Tuple2(
 									_Utils_update(
 										model,
-										{h: '', q: model.q + 1}),
+										{f: '', n: model.n + 1}),
 									$author$project$Main$sendMessage('Correct!'));
 							} else {
 								return _Utils_Tuple2(
 									_Utils_update(
 										model,
 										{
-											h: $elm$core$String$fromChar(c)
+											f: $elm$core$String$fromChar(c)
 										}),
 									$elm$core$Platform$Cmd$none);
 							}
@@ -5854,9 +5856,9 @@ var $author$project$Main$mysteryWordView = function (model) {
 							])),
 						A4(
 						$author$project$Main$mysteryLetter,
-						model.h,
+						model.f,
 						$author$project$Main$getMysteryWord(model),
-						model.q,
+						model.n,
 						model.r),
 						A2(
 						$elm$html$Html$button,
@@ -6030,7 +6032,7 @@ var $author$project$Main$wordInputView = function (model) {
 					[
 						$elm$html$Html$text('Enter Your Words')
 					])),
-				$author$project$Main$wordAdder(model.h),
+				$author$project$Main$wordAdder(model.f),
 				$author$project$Main$doneButton,
 				$author$project$Main$wordList(model.l)
 			]));
