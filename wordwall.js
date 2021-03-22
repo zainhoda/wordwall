@@ -2704,7 +2704,7 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		q: func(record.q),
+		r: func(record.r),
 		O: record.O,
 		L: record.L
 	}
@@ -2974,7 +2974,7 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.q;
+		var message = !tag ? value : tag < 3 ? value.a : value.r;
 		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.O;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
@@ -5142,7 +5142,7 @@ var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$init = function (_v0) {
 	return _Utils_Tuple2(
-		{f: '', D: true, l: _List_Nil, n: 0, r: 1, y: 0},
+		{f: '', D: true, i: _List_Nil, n: 0, o: 1, u: 0},
 		$elm$core$Platform$Cmd$none);
 };
 var $elm$json$Json$Decode$field = _Json_decodeField;
@@ -5603,7 +5603,7 @@ var $elm$core$List$head = function (list) {
 };
 var $author$project$Main$getMysteryWord = function (model) {
 	var _v0 = $elm$core$List$head(
-		A2($elm$core$List$drop, model.y, model.l));
+		A2($elm$core$List$drop, model.u, model.i));
 	if (_v0.$ === 1) {
 		return '';
 	} else {
@@ -5653,8 +5653,8 @@ var $author$project$Main$update = F2(
 							model,
 							{
 								f: '',
-								l: _Utils_ap(
-									model.l,
+								i: _Utils_ap(
+									model.i,
 									_List_fromArray(
 										[model.f]))
 							}),
@@ -5665,8 +5665,8 @@ var $author$project$Main$update = F2(
 						_Utils_update(
 							model,
 							{
-								l: _Utils_ap(
-									model.l,
+								i: _Utils_ap(
+									model.i,
 									_List_fromArray(
 										[message]))
 							}),
@@ -5685,12 +5685,12 @@ var $author$project$Main$update = F2(
 							$author$project$Main$getMysteryWord(model)));
 				case 5:
 					var newModel = (_Utils_cmp(
-						$elm$core$List$length(model.l),
-						model.y + 1) > 0) ? _Utils_update(
+						$elm$core$List$length(model.i),
+						model.u + 1) > 0) ? _Utils_update(
 						model,
-						{y: model.y + 1}) : _Utils_update(
+						{u: model.u + 1}) : _Utils_update(
 						model,
-						{r: model.r + 1, y: 0});
+						{o: model.o + 1, u: 0});
 					return _Utils_Tuple2(
 						_Utils_update(
 							newModel,
@@ -5701,7 +5701,7 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{r: model.r + 1}),
+							{o: model.o + 1}),
 						$author$project$Main$sendMessage(
 							'What are the missing letters in ' + ($author$project$Main$getMysteryWord(model) + '?')));
 				case 7:
@@ -5709,7 +5709,7 @@ var $author$project$Main$update = F2(
 					if (model.D) {
 						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 					} else {
-						if (_Utils_cmp(model.n + 1, model.r) > 0) {
+						if (_Utils_cmp(model.n + 1, model.o) > 0) {
 							var $temp$msg = $author$project$Main$NextWord,
 								$temp$model = _Utils_update(
 								model,
@@ -5744,6 +5744,7 @@ var $author$project$Main$update = F2(
 	});
 var $author$project$Main$MoreMissing = {$: 6};
 var $author$project$Main$Replay = {$: 4};
+var $elm$html$Html$br = _VirtualDom_node('br');
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -5827,6 +5828,96 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		'click',
 		$elm$json$Json$Decode$succeed(msg));
 };
+var $elm$core$String$fromFloat = _String_fromNumber;
+var $elm$html$Html$Attributes$max = $elm$html$Html$Attributes$stringProperty('max');
+var $elm$core$List$maximum = function (list) {
+	if (list.b) {
+		var x = list.a;
+		var xs = list.b;
+		return $elm$core$Maybe$Just(
+			A3($elm$core$List$foldl, $elm$core$Basics$max, x, xs));
+	} else {
+		return $elm$core$Maybe$Nothing;
+	}
+};
+var $elm$html$Html$p = _VirtualDom_node('p');
+var $elm$html$Html$progress = _VirtualDom_node('progress');
+var $elm$html$Html$section = _VirtualDom_node('section');
+var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
+var $author$project$Main$progressBar = function (model) {
+	var maxRounds = A2(
+		$elm$core$Maybe$withDefault,
+		1,
+		$elm$core$List$maximum(
+			A2($elm$core$List$map, $elm$core$String$length, model.i))) * $elm$core$List$length(model.i);
+	var currentRound = ((model.o - 1) * $elm$core$List$length(model.i)) + model.u;
+	var progressPercent = (100 * currentRound) / maxRounds;
+	return (progressPercent < 100) ? A2(
+		$elm$html$Html$progress,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('progress is-success'),
+				$elm$html$Html$Attributes$max('100'),
+				$elm$html$Html$Attributes$value(
+				$elm$core$String$fromFloat(progressPercent))
+			]),
+		_List_fromArray(
+			[
+				$elm$html$Html$text('')
+			])) : A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('modal is-active')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('modal-background')
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('modal-content')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$section,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('hero is-primary')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('hero-body')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$p,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$class('title')
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('All Done!')
+											]))
+									]))
+							]))
+					]))
+			]));
+};
 var $author$project$Main$mysteryWordView = function (model) {
 	return A2(
 		$elm$html$Html$div,
@@ -5859,7 +5950,7 @@ var $author$project$Main$mysteryWordView = function (model) {
 						model.f,
 						$author$project$Main$getMysteryWord(model),
 						model.n,
-						model.r),
+						model.o),
 						A2(
 						$elm$html$Html$button,
 						_List_fromArray(
@@ -5892,7 +5983,10 @@ var $author$project$Main$mysteryWordView = function (model) {
 						_List_fromArray(
 							[
 								$elm$html$Html$text('🆙 Next Level')
-							]))
+							])),
+						A2($elm$html$Html$br, _List_Nil, _List_Nil),
+						A2($elm$html$Html$br, _List_Nil, _List_Nil),
+						$author$project$Main$progressBar(model)
 					]))
 			]));
 };
@@ -5956,7 +6050,6 @@ var $elm$html$Html$Events$onInput = function (tagger) {
 };
 var $elm$html$Html$Attributes$placeholder = $elm$html$Html$Attributes$stringProperty('placeholder');
 var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
-var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
 var $author$project$Main$wordAdder = function (newPartialWord) {
 	return A2(
 		$elm$html$Html$div,
@@ -6034,7 +6127,7 @@ var $author$project$Main$wordInputView = function (model) {
 					])),
 				$author$project$Main$wordAdder(model.f),
 				$author$project$Main$doneButton,
-				$author$project$Main$wordList(model.l)
+				$author$project$Main$wordList(model.i)
 			]));
 };
 var $author$project$Main$view = function (model) {

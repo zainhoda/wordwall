@@ -7,6 +7,10 @@ import Html.Events exposing (..)
 import Json.Decode as D
 import Random
 import Browser.Events exposing (onKeyDown)
+import Html
+import Html
+import Html.Attributes
+import Debug exposing (toString)
 
 
 -- MAIN
@@ -160,6 +164,9 @@ mysteryWordView model =
           , button [class "button is-info", onClick Replay] [text "🔊 Replay"]
           , button [class "button is-primary", onClick NextWord] [text "➡️ Next Word"]
           , button [class "button is-warning", onClick MoreMissing] [text "🆙 Next Level"]
+          , br [] []
+          , br [] []
+          , progressBar model
           ]
     ]
 
@@ -225,7 +232,24 @@ wordList : List String -> Html Msg
 wordList listOfWords =
     ul [] (List.map (\word -> li [ class "title" ] [ text word ]) listOfWords)
 
-
+progressBar : Model -> Html Msg
+progressBar model = 
+  let maxRounds = (List.map String.length model.messages |> List.maximum |> Maybe.withDefault 1) * (List.length model.messages)
+      currentRound = (model.numMissing-1) * (List.length model.messages) + model.whichWord
+      progressPercent = 100 * (toFloat currentRound) / (toFloat maxRounds)
+  in
+    if progressPercent < 100 then
+      Html.progress [class "progress is-success", Html.Attributes.max "100", Html.Attributes.value (String.fromFloat progressPercent)] [text ""]
+    else
+      div [class "modal is-active"]
+          [ div [class "modal-background"] []
+          , div [class "modal-content"] 
+                [section [class "hero is-primary"]
+                         [ div [class "hero-body"]
+                               [p [class "title"] [text "All Done!"]]
+                         ]
+                ]
+          ]
 
 -- DETECT ENTER
 
